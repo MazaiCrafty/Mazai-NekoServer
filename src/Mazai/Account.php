@@ -31,10 +31,7 @@ class Account{
      * @return  bool
      */
     public function isCreatedAccount(Player $player): bool{
-        if (file_exists($this->dir . $player->getName() . '.yml')){
-            return true;
-        }
-        return false;
+        return file_exists($this->dir . $player->getName() . '.yml');
     }
 
     /**
@@ -53,8 +50,7 @@ class Account{
      * @return  Config
      */
     public function getData(Player $player): Config{
-        $result = new Config($this->dir . $player->getName() . '.yml', Config::YAML)->getAll(true);
-        return $result;
+        return new Config($this->dir . $player->getName() . '.yml', Config::YAML)->getAll(true);
     }
 
     /**
@@ -64,7 +60,7 @@ class Account{
      */
     public function setData(Player $player, array $array_data){
         foreach ($array_data as $key => $value){
-            $data = new Config($this->dir . $player->getName() . '.yml', Config::YAML);
+            $data = $this->getData($player);
             $data->set($key, $value);
             $data->save();
         }
@@ -77,7 +73,7 @@ class Account{
      */
     public function removeData(Player $player, array $array_data){
         foreach ($array_data as $key){
-            $data = new Config($this->dir . $player->getName() . '.yml', Config::YAML);
+            $data = $this->getData($player);
             $data->remove($key);
             $data->save();
         }
@@ -89,7 +85,7 @@ class Account{
      * @param   $find_key
      */
     public function existsData(Player $player, $find_key): bool{
-        $data = new Config($this->dir . $player->getName() . '.yml', Config::YAML);
+        $data = $this->getData($player);
         return $data->exists($find_key);
     }
 
