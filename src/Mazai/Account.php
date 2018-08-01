@@ -49,8 +49,17 @@ class Account{
      * @param   Player    $player
      * @return  Config
      */
-    public function getData(Player $player): Config{
-        return new Config($this->dir . $player->getName() . '.yml', Config::YAML)->getAll(true);
+    public function getAccount(Player $player): Config{
+        return new Config($this->dir . $player->getName() . '.yml', Config::YAML);
+    }
+    
+    /**
+     * データを取得
+     * @param   Player    $player
+     * @return  Config
+     */
+    public function getData(Player $player, bool $keys = false): array{
+        return $this->getAccount($player)->getAll($keys);
     }
 
     /**
@@ -60,7 +69,7 @@ class Account{
      */
     public function setData(Player $player, array $array_data){
         foreach ($array_data as $key => $value){
-            $data = $this->getData($player);
+            $data = $this->getAccount($player);
             $data->set($key, $value);
             $data->save();
         }
@@ -73,7 +82,7 @@ class Account{
      */
     public function removeData(Player $player, array $array_data){
         foreach ($array_data as $key){
-            $data = $this->getData($player);
+            $data = $this->getAccount($player);
             $data->remove($key);
             $data->save();
         }
@@ -85,7 +94,7 @@ class Account{
      * @param   $find_key
      */
     public function existsData(Player $player, $find_key): bool{
-        $data = $this->getData($player);
+        $data = $this->getAccount($player);
         return $data->exists($find_key);
     }
 
