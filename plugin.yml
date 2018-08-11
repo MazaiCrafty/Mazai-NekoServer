@@ -1,0 +1,7 @@
+main: Mazai\Main
+name: Mazai-NekoServer
+version: 1.0
+api:
+ - 4.0.0
+author: MazaiCrafty
+description: "plugin"
