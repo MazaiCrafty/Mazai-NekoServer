@@ -27,5 +27,6 @@ class Main extends PluginBase{
         }
 
         Event::register([], $this);
+        Command::register([], $this);
     }
 }
